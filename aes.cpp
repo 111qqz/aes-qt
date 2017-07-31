@@ -3,16 +3,7 @@
 #include "aes.h"
 #include "aes_lookup_tables.cpp"
 
-/*
-================
-classAES::InputForEncrypt
-Return values:
-0 - normal exit
-1 - text's size is null
-2 - inputkey's size is more than 16
-3 - inputkey's size is null
-================
-*/
+
 int classAES::InputForEncrypt(string textReceived, string inputkey)
 {
     int i;
@@ -42,41 +33,12 @@ int classAES::InputForEncrypt(string textReceived, string inputkey)
 
     memcpy(key, inputkey.c_str(), 16);
 
-    /*
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-    // uncomment this and comment everything above in this function
-    // if you want to test the example in aes flash animation
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-    unsigned char state2[ 16 ] = {
-        0x32, 0x88, 0x31, 0xe0,
-        0x43, 0x5a, 0x31, 0x37,
-        0xf6, 0x30, 0x98, 0x07,
-        0xa8, 0x8d, 0xa2, 0x34
-    };
 
-    unsigned char key2[ 16 ] = {
-        0x2b, 0x28, 0xab, 0x09,
-        0x7e, 0xae, 0xf7, 0xcf,
-        0x15, 0xd2, 0x15, 0x4f,
-        0x16, 0xa6, 0x88, 0x3c
-    };
-
-    memcpy(state, state2, 16);
-    memcpy(key, key2, 16);
-    */
 
     return 0;
 }
 
-/*
-================
-classAES::InputForDecrypt
-0 - normal exit
-1 - text's size is NOT A MULTIPLY OF 32
-2 - inputkey's size is more than 16
-3 - inputkey's size is null
-================
-*/
+
 int classAES::InputForDecrypt(string textReceived, string inputkey)
 {
     int i;
@@ -102,39 +64,12 @@ int classAES::InputForDecrypt(string textReceived, string inputkey)
 
     memcpy(key, inputkey.c_str(), 16);
 
-    /*
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-    // uncomment this and comment everything above in this function
-    // if you want to test the example in aes flash animation
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-    unsigned char state2[ 16 ] = {
-        0x39, 0x02, 0xdc, 0x19,
-        0x25, 0xdc, 0x11, 0x6a,
-        0x84, 0x09, 0x85, 0x0b,
-        0x1d, 0xfb, 0x97, 0x32
-    };
 
-    unsigned char key2[ 16 ] = {
-        0x2b, 0x28, 0xab, 0x09,
-        0x7e, 0xae, 0xf7, 0xcf,
-        0x15, 0xd2, 0x15, 0x4f,
-        0x16, 0xa6, 0x88, 0x3c
-    };
-
-    memcpy(state, state2, 16);
-    memcpy(key, key2, 16);
-    */
 
     return 0;
 }
 
-/*
-================
-classAES::Encrypt
-Retruns encrypted text.
-State should already be input
-================
-*/
+
 std::string classAES::Encrypt()
 {
     int i;
@@ -166,13 +101,7 @@ std::string classAES::Encrypt()
     return result;
 }
 
-/*
-================
-classAES::Decrypt
-Retruns decrypted text.
-Encrypted text should already be input
-================
-*/
+
 std::string classAES::Decrypt()
 {
     unsigned int i;
@@ -237,15 +166,7 @@ std::string classAES::Decrypt()
     return result;
 }
 
-//================================================================================
-//                      PRIVATES MEMBERS BELOW
-//================================================================================
-/*
-================
-classAES::GetResult
-Returns state[] as hex string
-================
-*/
+
 string classAES::GetResult()
 {
     char converted[100];
@@ -260,24 +181,14 @@ string classAES::GetResult()
     return result;
 }
 
-/*
-================
-classAES::GetResultText
-Returns state[] as plaintext string
-================
-*/
+
 string classAES::GetResultText()
 {
     string result(state, state + 16);
     return result;
 }
 
-/*
-================
-classAES::SubBytes
-1
-================
-*/
+
 void classAES::SubBytes()
 {
     unsigned char x, y;
@@ -289,12 +200,7 @@ void classAES::SubBytes()
     }
 }
 
-/*
-================
-classAES::SubBytesInverse
-~1
-================
-*/
+
 void classAES::SubBytesInverse()
 {
     unsigned char x, y;
@@ -306,30 +212,18 @@ void classAES::SubBytesInverse()
     }
 }
 
-/*
-================
-classAES::ShiftRows
-2
-================
-*/
+
 void classAES::ShiftRows()
 {
     unsigned char temp;
 
-    // SHIFT RIGHT
-
-    // 4 5 6 7
-    // to
-    // 5 6 7 4
     temp = state[ 4 ];
     state[ 4 ] = state[ 5 ];
     state[ 5 ] = state[ 6 ];
     state[ 6 ] = state[ 7 ];
     state[ 7 ] = temp;
 
-    // 8  9  10 11
-    // to
-    // 10 11 8  9
+
     temp = state[ 8 ];
     state[ 8 ] = state[ 10 ];
     state[ 10 ] = temp;
@@ -337,9 +231,6 @@ void classAES::ShiftRows()
     state[ 9 ] = state[ 11 ];
     state[ 11 ] = temp;
 
-    // 12 13 14 15
-    // to
-    // 15 12 13 14
     temp = state[ 12 ];
     state[ 12 ] = state[ 15 ];
     state[ 15 ] = state[ 14 ];
@@ -347,30 +238,18 @@ void classAES::ShiftRows()
     state[ 13 ] = temp;
 }
 
-/*
-================
-classAES::ShiftRowsInverse
-~2
-================
-*/
+
 void classAES::ShiftRowsInverse()
 {
     unsigned char temp;
 
-    // SHIFT LEFT
 
-    // 4 5 6 7
-    // to
-    // 7 4 5 6
     temp = state[ 7 ];
     state[ 7 ] = state[ 6 ];
     state[ 6 ] = state[ 5 ];
     state[ 5 ] = state[ 4 ];
     state[ 4 ] = temp;
 
-    // 8  9  10 11
-    // to
-    // 10 11 8  9
     temp = state[ 8 ];
     state[ 8 ] = state[ 10 ];
     state[ 10 ] = temp;
@@ -378,9 +257,7 @@ void classAES::ShiftRowsInverse()
     state[ 9 ] = state[ 11 ];
     state[ 11 ] = temp;
 
-    // 12 13 14 15
-    // to
-    // 13 14 15 12
+
     temp = state[ 12 ];
     state[ 12 ] = state[ 13 ];
     state[ 13 ] = state[ 14 ];
@@ -388,17 +265,7 @@ void classAES::ShiftRowsInverse()
     state[ 15 ] = temp;
 }
 
-/*
-================
-classAES::MixColumns
-3
-Mulitplies state by this matrix
-  2 3 1 1
-  1 2 3 1
-  1 1 2 3
-  3 1 1 2
-================
-*/
+
 void classAES::MixColumns()
 {
     int j;
@@ -428,17 +295,7 @@ void classAES::MixColumns()
     memcpy(state, temp, 16);
 }
 
-/*
-================
-classAES::MixColumnsInverse
-~3
-Multiplies state by:
-  14 11 13 9
-  9  14 11 13
-  13 9  14 11
-  11 13 9  14
-================
-*/
+
 void classAES::MixColumnsInverse()
 {
     int j;
@@ -468,12 +325,6 @@ void classAES::MixColumnsInverse()
     memcpy(state, temp, 16);
 }
 
-/*
-================
-classAES::AddRoundKey
-4
-================
-*/
 void classAES::AddRoundKey( unsigned char * k )
 {
     int i;
@@ -482,12 +333,7 @@ void classAES::AddRoundKey( unsigned char * k )
     }
 }
 
-/*
-================
-classAES::GenKeys
-Generates 10 keys from initial key for each round
-================
-*/
+
 void classAES::GenKeys()
 {
     // column0

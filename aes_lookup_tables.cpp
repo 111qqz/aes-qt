@@ -1,6 +1,4 @@
-// aes_lookup_tables.cpp
-// This file contains lookup tables for multiplication by 2, 3, 9, 11, 13, 14
-// and S-box, rcon arrays.
+
 
 // For multiplying by 2:
 unsigned char table_2[ 256 ] = {
